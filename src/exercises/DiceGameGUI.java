@@ -7,7 +7,6 @@ package exercises;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.lang.Integer;
 import java.util.Arrays;
 
 /**
@@ -15,6 +14,12 @@ import java.util.Arrays;
  * @author intensiveporpoises
  */
 public class DiceGameGUI extends javax.swing.JFrame {
+    
+    private boolean d1Bap;
+    private boolean d2Bap;
+    private String comboText = "";
+    
+    
 
     /**
      * Creates new form MathDiceGUI
@@ -60,6 +65,11 @@ public class DiceGameGUI extends javax.swing.JFrame {
         });
 
         d2Button.setText("D2");
+        d2Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                d2ButtonActionPerformed(evt);
+            }
+        });
 
         d3Button.setText("D3");
 
@@ -102,8 +112,6 @@ public class DiceGameGUI extends javax.swing.JFrame {
                 enterButtonActionPerformed(evt);
             }
         });
-
-        comboLabel.setText("4+1-2+3+5");
 
         resultLabel.setText("Good job! That's correct");
 
@@ -179,12 +187,23 @@ public class DiceGameGUI extends javax.swing.JFrame {
 
     private void d1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d1ButtonActionPerformed
         //check the text content of the d1Button
+        comboText = comboLabel.getText();
+        d1Bap = true;
         String d1Text = d1Button.getText();
-        if(!d1Text.contentEquals("D1")) { //if d1's text is an int
-            comboLabel.setText(d1Text);
+        if(!d1Text.contentEquals("D1")) { 
+            comboLabel.setText(comboText + d1Text);
         }
         //gray the button out once it's been selected, unless clear or roll
         //is clicked
+        
+        //convert d1Text string to an integer
+        Integer d1Integer = Integer.valueOf(d1Text);
+        intTest.add(d1Integer); //add the value to the Integer list array
+        
+        plusButton.setEnabled(true);
+        minusButton.setEnabled(true);
+        enterButton.setEnabled(true);
+        
         d1Button.setEnabled(false); 
         d2Button.setEnabled(false);
         d3Button.setEnabled(false);
@@ -229,15 +248,25 @@ public class DiceGameGUI extends javax.swing.JFrame {
         
         //clear out the entries every time roll is clicked
         comboLabel.setText("");
-        //disable +, -, and enter buttons
+        //reset buttons
         plusButton.setEnabled(false);
         minusButton.setEnabled(false);
         enterButton.setEnabled(false);
+        d1Button.setEnabled(true); 
+        d2Button.setEnabled(true);
+        d3Button.setEnabled(true);
+        d4Button.setEnabled(true);
+        d5Button.setEnabled(true);
+        
+        //clear out arrays
+        intTest.clear();
+        charTest.clear();
         
     }//GEN-LAST:event_rollButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         comboLabel.setText(""); //clear out the label if clear btn clicked
+        //reset buttons
         plusButton.setEnabled(false);
         minusButton.setEnabled(false);
         enterButton.setEnabled(false);
@@ -246,14 +275,77 @@ public class DiceGameGUI extends javax.swing.JFrame {
         d3Button.setEnabled(true);
         d4Button.setEnabled(true);
         d5Button.setEnabled(true);
+        
+        //clear out arrays
+        intTest.clear();
+        charTest.clear();
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void plusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusButtonActionPerformed
+        comboText = comboLabel.getText();
+        
+        if(!comboText.contentEquals("") ) {
+            comboLabel.setText(comboText + "+");
+        }
+        
+        
+        
+        
+        
+        
+        
+        if (d1Bap)  { //if d1button method wasn't called
+            
+            d1Button.setEnabled(false);
+            
+        }
+        
+        if (d2Bap)  { 
+            d2Button.setEnabled(false);
+            
+        }
+        //reset buttons
+        plusButton.setEnabled(false);
+        minusButton.setEnabled(false);
+        d1Button.setEnabled(true);
+        d2Button.setEnabled(true);
+        d3Button.setEnabled(true);
+        d4Button.setEnabled(true);
+        d5Button.setEnabled(true);
+        
+        charTest.add('+');
         
     }//GEN-LAST:event_plusButtonActionPerformed
 
     private void minusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusButtonActionPerformed
-        // TODO add your handling code here:
+         comboText = comboLabel.getText();
+        
+        if(!comboText.contentEquals("") ) {
+            comboLabel.setText(comboText + "-");
+        }
+        
+        
+        
+        if (d1Bap)  { //if d1button method wasn't called
+            d1Button.setEnabled(false);
+            
+        }
+        
+        if (d2Bap)  { 
+            d2Button.setEnabled(false);
+            
+        }
+        
+        plusButton.setEnabled(false);
+        minusButton.setEnabled(false);
+        d1Button.setEnabled(true);
+        d2Button.setEnabled(true);
+        d3Button.setEnabled(true);
+        d4Button.setEnabled(true);
+        d5Button.setEnabled(true);
+        
+        charTest.add('-');
+        
     }//GEN-LAST:event_minusButtonActionPerformed
 
     private void enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterButtonActionPerformed
@@ -287,6 +379,31 @@ public class DiceGameGUI extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_enterButtonActionPerformed
+
+    private void d2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d2ButtonActionPerformed
+        comboText = comboLabel.getText();
+        d2Bap = true;
+        String d2Text = d2Button.getText();
+        if(!d2Text.contentEquals("D2")) { 
+            comboLabel.setText(comboText + d2Text);
+        }
+        
+        
+        
+        Integer d2Integer = Integer.valueOf(d2Text);
+        intTest.add(d2Integer); 
+        
+        plusButton.setEnabled(true);
+        minusButton.setEnabled(true);
+        enterButton.setEnabled(true);
+        
+        
+        d1Button.setEnabled(false); 
+        d2Button.setEnabled(false);
+        d3Button.setEnabled(false);
+        d4Button.setEnabled(false);
+        d5Button.setEnabled(false);
+    }//GEN-LAST:event_d2ButtonActionPerformed
 
     /**
      * @param args the command line arguments

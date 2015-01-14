@@ -122,6 +122,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="D2"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="d2ButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="d3Button">
       <Properties>
@@ -180,9 +183,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="comboLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="4+1-2+3+5"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="resultLabel">
       <Properties>
