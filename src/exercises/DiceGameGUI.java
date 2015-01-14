@@ -7,7 +7,7 @@ package exercises;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Arrays;
+
 
 /**
  *
@@ -17,7 +17,17 @@ public class DiceGameGUI extends javax.swing.JFrame {
     
     private boolean d1Bap;
     private boolean d2Bap;
+    private boolean d3Bap;
+    private boolean d4Bap;
+    private boolean d5Bap;
+    private final boolean [] bapArray = {
+        d1Bap, d2Bap, d3Bap, d4Bap, d5Bap
+    };
     private String comboText = "";
+    private Random rand = new Random();
+    ArrayList<Integer> intTest = new ArrayList<Integer>(); 
+    ArrayList<Character> charTest = new ArrayList<Character>();
+    
     
     
 
@@ -72,11 +82,26 @@ public class DiceGameGUI extends javax.swing.JFrame {
         });
 
         d3Button.setText("D3");
+        d3Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                d3ButtonActionPerformed(evt);
+            }
+        });
 
         d4Button.setText("D4");
         d4Button.setToolTipText("");
+        d4Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                d4ButtonActionPerformed(evt);
+            }
+        });
 
         d5Button.setText("D5");
+        d5Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                d5ButtonActionPerformed(evt);
+            }
+        });
 
         plusButton.setText("+");
         plusButton.addActionListener(new java.awt.event.ActionListener() {
@@ -258,6 +283,16 @@ public class DiceGameGUI extends javax.swing.JFrame {
         d4Button.setEnabled(true);
         d5Button.setEnabled(true);
         
+        //baps become false
+        /*for(boolean b: bapArray) {
+            b = false;
+        }*/
+        d1Bap = false;
+        d2Bap = false;
+        d3Bap = false;
+        d4Bap = false;
+        d5Bap = false;
+        
         //clear out arrays
         intTest.clear();
         charTest.clear();
@@ -275,6 +310,16 @@ public class DiceGameGUI extends javax.swing.JFrame {
         d3Button.setEnabled(true);
         d4Button.setEnabled(true);
         d5Button.setEnabled(true);
+        
+        //baps become false
+        /*for(boolean b: bapArray) {
+            b = false;
+        } */
+        d1Bap = false;
+        d2Bap = false;
+        d3Bap = false;
+        d4Bap = false;
+        d5Bap = false;
         
         //clear out arrays
         intTest.clear();
@@ -294,21 +339,20 @@ public class DiceGameGUI extends javax.swing.JFrame {
         
         
         
-        if (d1Bap)  { //if d1button method wasn't called
-            
-            d1Button.setEnabled(false);
+        if (d1Bap == false)  { //if d1button method wasn't called enable its btn
+            //d1Bap should be false if only d2 btn was pressed
+            d1Button.setEnabled(true);
             
         }
         
-        if (d2Bap)  { 
-            d2Button.setEnabled(false);
+        if (d2Bap == false)  { 
+            d2Button.setEnabled(true);
             
         }
         //reset buttons
         plusButton.setEnabled(false);
         minusButton.setEnabled(false);
-        d1Button.setEnabled(true);
-        d2Button.setEnabled(true);
+        
         d3Button.setEnabled(true);
         d4Button.setEnabled(true);
         d5Button.setEnabled(true);
@@ -326,20 +370,21 @@ public class DiceGameGUI extends javax.swing.JFrame {
         
         
         
-        if (d1Bap)  { //if d1button method wasn't called
-            d1Button.setEnabled(false);
+        if (d1Bap == false)  { //if d1button method wasn't called enable its btn
+            d1Button.setEnabled(true);
             
         }
         
-        if (d2Bap)  { 
-            d2Button.setEnabled(false);
+        //else it stays disabled from having just pressed a number btn
+        
+        if (d2Bap == false)  { 
+            d2Button.setEnabled(true);
             
         }
         
         plusButton.setEnabled(false);
         minusButton.setEnabled(false);
-        d1Button.setEnabled(true);
-        d2Button.setEnabled(true);
+        
         d3Button.setEnabled(true);
         d4Button.setEnabled(true);
         d5Button.setEnabled(true);
@@ -355,27 +400,79 @@ public class DiceGameGUI extends javax.swing.JFrame {
         userStrAnswer = Integer.toString(userIntAnswer);
         
         comboLabel.setText(userStrAnswer); */
-        //keep track of sequence of buttons user presses? 
+        //keep track of sequence of buttons user presses?
+        
         int total = 0;
         int i = 0;
+        int ran = 0; //only for special case where first two elements in the 
+        //Integer array list are the same and being subtracted
+        
+        
+        
+        
+        
         
         if (intTest.size() == charTest.size()+1) {
             
-	if (charTest.get(i) == 43) { //the symbol is a + (- equals 45)
-            total = intTest.get(i) + intTest.get(i+1);
-            comboLabel.setText(Integer.toString(total));
+            for (Character c : charTest) { //e.g. 5-5+1
+                if(charTest.get(i) == 43) { 
+                    if (total != 0) {
+                    total = total + intTest.get(i+1); 
+                    comboLabel.setText(Integer.toString(total));
+                    
+                    i++;
+                    }
+                    else {
+                        total = intTest.get(i) + intTest.get(i+1);
+                        comboLabel.setText(Integer.toString(total));
+                        
+                        i++;
+                    }
+                }
+                
+                else {
+                    //covers case that first 2 in intTest are the same #
+                    //if this runs, the else below shouldn't
+                    if (intTest.get(0) == intTest.get(1) && ran == 0) {
+                        total = 0;
+                        comboLabel.setText(Integer.toString(total));
+                        i++;
+                        ran++;
+                        
+                    
+                    
+                    }
+                    
+                     if (total != 0) {   
+                    total = total - intTest.get(i+1);
+                    comboLabel.setText(Integer.toString(total));
+                    
+                    i++;
+                    }//if total is 0 but not because the first two numbers
+                     //are the same and being subtracted
+                     else if (ran == 0){
+                         
+                         total = intTest.get(i) - intTest.get(i+1);
+                         comboLabel.setText(Integer.toString(total));
+                         
+                         i++;
+                     }
+                    
+                    
+                    
+                    
+                }
+            }
+            
         }
-        else {
-            total = intTest.get(i) - intTest.get(i+1);
-            comboLabel.setText(Integer.toString(total));
-        }
-        
-        //temp to make sure this works
+                
+            
+	
         
         
         
 
-}
+
         
         
     }//GEN-LAST:event_enterButtonActionPerformed
@@ -404,6 +501,18 @@ public class DiceGameGUI extends javax.swing.JFrame {
         d4Button.setEnabled(false);
         d5Button.setEnabled(false);
     }//GEN-LAST:event_d2ButtonActionPerformed
+
+    private void d3ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d3ButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_d3ButtonActionPerformed
+
+    private void d4ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d4ButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_d4ButtonActionPerformed
+
+    private void d5ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d5ButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_d5ButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,9 +549,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         });
     }
-    private Random rand = new Random();
-    ArrayList<Integer> intTest = new ArrayList<Integer>(); 
-    ArrayList<Character> charTest = new ArrayList<Character>();
+    
     
     
 
