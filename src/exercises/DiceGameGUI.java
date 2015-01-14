@@ -20,6 +20,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
     private boolean d3Bap;
     private boolean d4Bap;
     private boolean d5Bap;
+    private boolean minusHit;
     private final boolean [] bapArray = {
         d1Bap, d2Bap, d3Bap, d4Bap, d5Bap
     };
@@ -222,8 +223,14 @@ public class DiceGameGUI extends javax.swing.JFrame {
         //is clicked
         
         //convert d1Text string to an integer
+        if(minusHit == false) {
         Integer d1Integer = Integer.valueOf(d1Text);
         intTest.add(d1Integer); //add the value to the Integer list array
+        }
+        else {
+            Integer d1Integer = -Integer.valueOf(d1Text);
+            intTest.add(d1Integer); 
+        }
         
         plusButton.setEnabled(true);
         minusButton.setEnabled(true);
@@ -292,6 +299,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         d3Bap = false;
         d4Bap = false;
         d5Bap = false;
+        minusHit = false;
         
         //clear out arrays
         intTest.clear();
@@ -320,6 +328,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         d3Bap = false;
         d4Bap = false;
         d5Bap = false;
+        minusHit = false;
         
         //clear out arrays
         intTest.clear();
@@ -339,8 +348,8 @@ public class DiceGameGUI extends javax.swing.JFrame {
         
         
         
-        if (d1Bap == false)  { //if d1button method wasn't called enable its btn
-            //d1Bap should be false if only d2 btn was pressed
+        if (d1Bap == false)  { 
+            
             d1Button.setEnabled(true);
             
         }
@@ -349,13 +358,27 @@ public class DiceGameGUI extends javax.swing.JFrame {
             d2Button.setEnabled(true);
             
         }
+        
+        if (d3Bap == false)  { 
+            d3Button.setEnabled(true);
+            
+        }
+        
+        if (d4Bap == false)  { 
+            d4Button.setEnabled(true);
+            
+        }
+        
+        if (d5Bap == false)  { 
+            d5Button.setEnabled(true);
+            
+        }
         //reset buttons
         plusButton.setEnabled(false);
         minusButton.setEnabled(false);
+        minusHit = false;
         
-        d3Button.setEnabled(true);
-        d4Button.setEnabled(true);
-        d5Button.setEnabled(true);
+        
         
         charTest.add('+');
         
@@ -382,90 +405,42 @@ public class DiceGameGUI extends javax.swing.JFrame {
             
         }
         
+        if (d3Bap == false)  { 
+            d3Button.setEnabled(true);
+            
+        }
+        
+        if (d4Bap == false)  { 
+            d4Button.setEnabled(true);
+            
+        }
+        
+        if (d5Bap == false)  { 
+            d5Button.setEnabled(true);
+            
+        }
+        
         plusButton.setEnabled(false);
         minusButton.setEnabled(false);
+        minusHit = true;
         
-        d3Button.setEnabled(true);
-        d4Button.setEnabled(true);
-        d5Button.setEnabled(true);
+        
         
         charTest.add('-');
         
     }//GEN-LAST:event_minusButtonActionPerformed
 
     private void enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterButtonActionPerformed
-        //gray out if there's no number or the text doesn't end in a number
-        /*String userStrAnswer = comboLabel.getText();
-        int userIntAnswer = Integer.parseInt(userStrAnswer);
-        userStrAnswer = Integer.toString(userIntAnswer);
-        
-        comboLabel.setText(userStrAnswer); */
-        //keep track of sequence of buttons user presses?
-        
-        int total = 0;
-        int i = 0;
-        int ran = 0; //only for special case where first two elements in the 
-        //Integer array list are the same and being subtracted
         
         
-        
-        
-        
-        
+        //add the elements in the intTest arraylist 
         if (intTest.size() == charTest.size()+1) {
-            
-            for (Character c : charTest) { //e.g. 5-5+1
-                if(charTest.get(i) == 43) { 
-                    if (total != 0) {
-                    total = total + intTest.get(i+1); 
-                    comboLabel.setText(Integer.toString(total));
-                    
-                    i++;
-                    }
-                    else {
-                        total = intTest.get(i) + intTest.get(i+1);
-                        comboLabel.setText(Integer.toString(total));
-                        
-                        i++;
-                    }
-                }
-                
-                else {
-                    //covers case that first 2 in intTest are the same #
-                    //if this runs, the else below shouldn't
-                    if (intTest.get(0) == intTest.get(1) && ran == 0) {
-                        total = 0;
-                        comboLabel.setText(Integer.toString(total));
-                        i++;
-                        ran++;
-                        
-                    
-                    
-                    }
-                    
-                     if (total != 0) {   
-                    total = total - intTest.get(i+1);
-                    comboLabel.setText(Integer.toString(total));
-                    
-                    i++;
-                    }//if total is 0 but not because the first two numbers
-                     //are the same and being subtracted
-                     else if (ran == 0){
-                         
-                         total = intTest.get(i) - intTest.get(i+1);
-                         comboLabel.setText(Integer.toString(total));
-                         
-                         i++;
-                     }
-                    
-                    
-                    
-                    
-                }
-            }
-            
+        int total = 0;
+        for(Integer i : intTest){
+            total += i; //total = total + i;
         }
-                
+        comboLabel.setText(Integer.toString(total));
+        }
             
 	
         
@@ -485,10 +460,18 @@ public class DiceGameGUI extends javax.swing.JFrame {
             comboLabel.setText(comboText + d2Text);
         }
         
-        
-        
+        if(minusHit == false) {
         Integer d2Integer = Integer.valueOf(d2Text);
-        intTest.add(d2Integer); 
+        intTest.add(d2Integer); //add the value to the Integer list array
+        }
+        else {
+            Integer d2Integer = -Integer.valueOf(d2Text);
+            intTest.add(d2Integer); 
+        }
+        
+        
+        
+         
         
         plusButton.setEnabled(true);
         minusButton.setEnabled(true);
@@ -503,15 +486,97 @@ public class DiceGameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_d2ButtonActionPerformed
 
     private void d3ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d3ButtonActionPerformed
-        // TODO add your handling code here:
+        comboText = comboLabel.getText();
+        d3Bap = true;
+        String d3Text = d3Button.getText();
+        if(!d3Text.contentEquals("D3")) { 
+            comboLabel.setText(comboText + d3Text);
+        }
+        
+        
+        
+        if(minusHit == false) {
+        Integer d3Integer = Integer.valueOf(d3Text);
+        intTest.add(d3Integer); //add the value to the Integer list array
+        }
+        else {
+            Integer d3Integer = -Integer.valueOf(d3Text);
+            intTest.add(d3Integer); 
+        }
+        
+        plusButton.setEnabled(true);
+        minusButton.setEnabled(true);
+        enterButton.setEnabled(true);
+        
+        
+        d1Button.setEnabled(false); 
+        d2Button.setEnabled(false);
+        d3Button.setEnabled(false);
+        d4Button.setEnabled(false);
+        d5Button.setEnabled(false);
     }//GEN-LAST:event_d3ButtonActionPerformed
 
     private void d4ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d4ButtonActionPerformed
-        // TODO add your handling code here:
+        comboText = comboLabel.getText();
+        d4Bap = true;
+        String d4Text = d4Button.getText();
+        if(!d4Text.contentEquals("D4")) { 
+            comboLabel.setText(comboText + d4Text);
+        }
+        
+        
+        
+        if(minusHit == false) {
+        Integer d4Integer = Integer.valueOf(d4Text);
+        intTest.add(d4Integer); //add the value to the Integer list array
+        }
+        else {
+            Integer d4Integer = -Integer.valueOf(d4Text);
+            intTest.add(d4Integer); 
+        } 
+        
+        plusButton.setEnabled(true);
+        minusButton.setEnabled(true);
+        enterButton.setEnabled(true);
+        
+        
+        d1Button.setEnabled(false); 
+        d2Button.setEnabled(false);
+        d3Button.setEnabled(false);
+        d4Button.setEnabled(false);
+        d5Button.setEnabled(false);
     }//GEN-LAST:event_d4ButtonActionPerformed
 
     private void d5ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_d5ButtonActionPerformed
-        // TODO add your handling code here:
+        
+        comboText = comboLabel.getText();
+        d5Bap = true;
+        String d5Text = d5Button.getText();
+        if(!d5Text.contentEquals("D5")) { 
+            comboLabel.setText(comboText + d5Text);
+        }
+        
+        
+        
+        if(minusHit == false) {
+        Integer d5Integer = Integer.valueOf(d5Text);
+        intTest.add(d5Integer); //add the value to the Integer list array
+        }
+        else {
+            Integer d5Integer = -Integer.valueOf(d5Text);
+            intTest.add(d5Integer); 
+        }
+        
+        plusButton.setEnabled(true);
+        minusButton.setEnabled(true);
+        enterButton.setEnabled(true);
+        
+        
+        d1Button.setEnabled(false); 
+        d2Button.setEnabled(false);
+        d3Button.setEnabled(false);
+        d4Button.setEnabled(false);
+        d5Button.setEnabled(false);
     }//GEN-LAST:event_d5ButtonActionPerformed
 
     /**
