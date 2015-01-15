@@ -21,6 +21,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
     private boolean d4Bap;
     private boolean d5Bap;
     private boolean minusHit;
+    private int target;
     private final boolean [] bapArray = {
         d1Bap, d2Bap, d3Bap, d4Bap, d5Bap
     };
@@ -139,8 +140,6 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         });
 
-        resultLabel.setText("Good job! That's correct");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,7 +204,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                     .addComponent(comboLabel))
                 .addGap(35, 35, 35)
                 .addComponent(resultLabel)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         pack();
@@ -274,8 +273,8 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         }
         //generate random int for a 12-sided die
-        int randomInt = rand.nextInt(12) + 1;
-        String instr = "The target number is " +Integer.toString(randomInt);
+        target = rand.nextInt(12) + 1;
+        String instr = "The target number is " +Integer.toString(target);
         instructionsLabel.setText(instr);
         
         //clear out the entries every time roll is clicked
@@ -431,16 +430,23 @@ public class DiceGameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_minusButtonActionPerformed
 
     private void enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterButtonActionPerformed
-        
+        int total = 0;
         
         //add the elements in the intTest arraylist 
         if (intTest.size() == charTest.size()+1) {
-        int total = 0;
+        
         for(Integer i : intTest){
-            total += i; //total = total + i;
+            total += i; 
         }
         comboLabel.setText(Integer.toString(total));
         }
+        
+        
+        //show the user the results
+        if (total == target ) {
+            resultLabel.setText("Good job! That's correct");
+        }
+        else resultLabel.setText("Sorry, try again");
             
 	
         
